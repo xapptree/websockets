@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6c709ddd-66c1-4fc5-a7fd-2cc7724cd7bd/resourceGroups/IOT/providers/Microsoft.Web/sites/variantiot",
+    "appService.deploySubpath": "."
+}
