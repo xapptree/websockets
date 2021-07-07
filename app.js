@@ -4,10 +4,9 @@ const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 3900;
+var port = process.env.PORT || 443;
 //Database 
 const CosmosClient = require('@azure/cosmos').CosmosClient
-
 const config = require('./dbconfig')
 const url = require('url')
 
@@ -18,6 +17,7 @@ const databaseId = config.database.id
 const variantContainerId = config.variantContainer.id
 const userContainerId = config.userContainer.id
 const devicetContainerId = config.deviceContainer.id
+const ticketContainerId = config.ticketContainer.id
 
 const partitionKey = { kind: 'Hash', paths: ['/partitionKey'] }
 
@@ -37,11 +37,18 @@ server.listen(port, () => {
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Chatroom
-
 let numUsers = 0;
 
 io.on('connection', (socket) => {
+
+  // socket.on(config.createVariant, (request) => {
+  //   createVariant(request)
+  //   socket.emit('listern_createVariant', {
+  //     statusCode: 200,
+  //     message :'Variant created success'
+  //   });
+  // });
+  //---
   let addedUser = false;
 
   // when the client emits 'new message', this listens and executes
@@ -57,7 +64,8 @@ io.on('connection', (socket) => {
   socket.on('add user', (username) => {
     if (addedUser) return;
 
-    createVariant(config.testVariantItem)
+    var res = createVariant(config.testTicketItem)
+    console.log(`Created ticket status:\n${res}\n`)
     // we store the username in the socket session for this client
     socket.username = username;
     ++numUsers;
@@ -103,7 +111,8 @@ io.on('connection', (socket) => {
 async function createVariant(request) {
   const { item } = await client
     .database(databaseId)
-    .container(variantContainerId)
+    .container(ticketContainerId)
     .items.create(request)
-  console.log(`Created variant with id:\n${request.id}\n`)
+  console.log(`Created ticket with id:\n${item}\n`)
+  return item
 }
