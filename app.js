@@ -5,6 +5,30 @@ const path = require('path');
 const server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 3900;
+//Database 
+const CosmosClient = require('@azure/cosmos').CosmosClient
+
+const config = require('./dbconfig')
+const url = require('url')
+
+const endpoint = config.endpoint
+const key = config.key
+
+const databaseId = config.database.id
+const variantContainerId = config.variantContainer.id
+const userContainerId = config.userContainer.id
+const devicetContainerId = config.deviceContainer.id
+
+const partitionKey = { kind: 'Hash', paths: ['/partitionKey'] }
+
+const options = {
+      endpoint: endpoint,
+      key: key
+    };
+
+const client = new CosmosClient(options)
+//
+
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
@@ -33,6 +57,7 @@ io.on('connection', (socket) => {
   socket.on('add user', (username) => {
     if (addedUser) return;
 
+    createVariant(config.testVariantItem)
     // we store the username in the socket session for this client
     socket.username = username;
     ++numUsers;
@@ -74,3 +99,11 @@ io.on('connection', (socket) => {
     }
   });
 });
+
+async function createVariant(request) {
+  const { item } = await client
+    .database(databaseId)
+    .container(variantContainerId)
+    .items.create(request)
+  console.log(`Created variant with id:\n${request.id}\n`)
+}
