@@ -1,4 +1,8 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/6c709ddd-66c1-4fc5-a7fd-2cc7724cd7bd/resourceGroups/IOT/providers/Microsoft.Web/sites/variantiot",
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/9525b17c-e9b2-4e92-9640-6f9723164c9d/resourceGroups/VariantResource/providers/Microsoft.Web/sites/variantiot"
 }
