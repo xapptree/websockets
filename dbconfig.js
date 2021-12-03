@@ -1,8 +1,6 @@
 var config = {}
 
-config.endpoint = 'https://smartvarientkey.documents.azure.com:443/'
-config.key = 'yBqqEvTDGQcqmV3YFTtHKJywzBgw9zRvZiipC7dnGo9PDczMElxu9CqdowsORq5icqOgdTFMyGO1qqtBsEMgkg=='
-config.mongo_endpoint = 'mongodb://variantiot2021:27gdsuD7LvQzuql9HqENvDy20F9vBgrQHA6CZBT4iUoelrCzyNx9g6JLg85gVVDz6NGg4Pwa8jMsfgr11ZVReg==@variantiot2021.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@variantiot2021@'
+
 //Create
 config.createVariant = 'CREATE_VARIANT'
 config.createUser = 'CREATE_USER'
