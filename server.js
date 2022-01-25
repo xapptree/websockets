@@ -128,13 +128,13 @@ let numUsers = 0;
 let vid = "ESP32_2022";
 io.on('connection', (socket) => {
 
-  // io.emit(`callback_deviceStatusUpdate:${vid}`, {
-  //   statusCode: 200,
-  //   message :'Update successfull',
-  //   device_status:200,
-  //   device_id:"relay1",
-  //   variant_id:vid
-  // });
+  io.emit(`callback_deviceStatusUpdate:${vid}`, {
+    statusCode: 200,
+    message :'Update successfull',
+    device_status:200,
+    device_id:"relay1",
+    variant_id:vid
+  });
 
   //Create Variant
   socket.on(config.createVariant, (request) => {
