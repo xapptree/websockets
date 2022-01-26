@@ -4,8 +4,8 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     createUser:async function(mongoDB, request) {
         try{
-            var mUser =  getRegisteredUser(mongoDB, request.mobile);
-            if(item != null){
+            var mUser =  await getRegisteredUser(mongoDB, request.mobile);
+            if(mUser != null){
                 return null;
             }
             var response =  await mongoDB.collection(config.userContainer.id).insertOne(request);
