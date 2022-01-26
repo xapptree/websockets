@@ -558,7 +558,7 @@ io.on('connection', (socket) => {
   // when the client emits 'add user', this listens and executes
   socket.on('add user', (username) => {
     if (addedUser) return;
-    createUser(config.testCreateUser).then((item) => {
+    UserRepo.createUser(config.testCreateUser).then((item) => {
       if(item == null){
         socket.emit('callback_createUser', {
           statusCode: 409,
