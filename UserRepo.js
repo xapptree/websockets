@@ -3,21 +3,27 @@ var ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
     createUser:async function(mongoDB, request) {
-        getRegisteredUser(mongoDB, request.mobile).then((item) => { 
-            if(item == null){
+        try{
+            var mUser =  getRegisteredUser(mongoDB, request.mobile);
+            if(item != null){
                 return null;
             }
-            try{
-                var response =  await mongoDB.collection(config.userContainer.id).insertOne(request);
-                return response.insertedId; 
-            }
-            catch(err){
-                throw(err);
-            }
+            var response =  await mongoDB.collection(config.userContainer.id).insertOne(request);
+            return response.insertedId; 
+        }
+        catch(err){
+            throw(err);
+        }
 
-        }).catch((error) => {
-            throw(error);
-         });
+
+        // getRegisteredUser(mongoDB, request.mobile).then((item) => { 
+        //     if(item == null){
+        //         return null;
+        //     }
+            
+        // }).catch((error) => {
+        //     throw(error);
+        //  });
 
     },
       
