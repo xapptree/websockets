@@ -20,8 +20,7 @@ var mongoDB;
 var option = {
   autoReconnect: true,
   poolSize : 40,
-  reconnectTries: 30,
-  perMessageDeflate :false
+  reconnectTries: 30
 };
 
 MongoClient.connect(config.mongo_endpoint,option, function(err, client) {
@@ -164,10 +163,20 @@ io.on('connection', (socket) => {
    //Create User
    socket.on(config.createUser, (request) => {
     createUser(request)
-    .then((item) => { socket.emit('callback_createUser', {
-      statusCode: 200,
-      message :'User created success'
-    });})
+    .then((item) => {
+      if(item == null){
+        socket.emit('callback_createUser', {
+          statusCode: 409,
+          message :'User already present'
+        });
+
+      }else{
+        socket.emit('callback_createUser', {
+          statusCode: 200,
+          message :'User created success'
+        });
+      }
+       })
     .catch((error) => {  socket.emit('callback_createUser', {
       statusCode: 409,
       message :'User created failed'
@@ -550,23 +559,43 @@ io.on('connection', (socket) => {
   socket.on('add user', (username) => {
     if (addedUser) return;
 
-    UserRepo.createUser(mongoDB, config.testCreateUser).then(
-          function(value) { 
-            console.log(value);
-            socket.emit('new message', {
-              username:socket.username,
-              statusCode: 200,
-              message :'Update successfull'
-            });
-          },
-      function(error) { 
-        console.log(error);
-        socket.emit('new message', {
-          username:socket.username,
+    createUser(config.testCreateUser)
+    .then((item) => {
+      if(item == null){
+        socket.emit('callback_createUser', {
           statusCode: 409,
-          message : 'Failed to update Variant.'
+          message :'User already present'
         });
-      }); 
+
+      }else{
+        socket.emit('callback_createUser', {
+          statusCode: 200,
+          message :'User created success'
+        });
+      }
+       })
+    .catch((error) => {  socket.emit('callback_createUser', {
+      statusCode: 409,
+      message :'User created failed'
+    });});
+
+    // UserRepo.createUser(mongoDB, config.testCreateUser).then(
+    //       function(value) { 
+    //         console.log(value);
+    //         socket.emit('new message', {
+    //           username:socket.username,
+    //           statusCode: 200,
+    //           message :'Update successfull'
+    //         });
+    //       },
+    //   function(error) { 
+    //     console.log(error);
+    //     socket.emit('new message', {
+    //       username:socket.username,
+    //       statusCode: 409,
+    //       message : 'Failed to update Variant.'
+    //     });
+    //   }); 
     
     // var recordDoc = variantRepoAccess.read("", function(error, response){
 
