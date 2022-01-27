@@ -19,7 +19,19 @@ $(function() {
   const $chatPage = $('.chat.page');          // The chatroom page
 
   const socket = io();
-  const config = require('./dbconfig');
+  var testCreateVariant = {
+    "variant_id" : "ESP32_2022",
+    "parent_id" : "p2",
+    "variant_type" : "B-2",
+    "variant_status" : 200,
+    "variant_name" : "ESP32_2022",
+    "variant_enable" : true,
+    "container" : "BedRoom",
+    "variant_connected" : true,
+    "access_type" : "PRIVATE",
+    "firmware_version" : "1.0.0",
+    "firmare_name" : "SmartBoard_12Channel"
+  }
 
   // Prompt for setting a username
   let username;
@@ -228,7 +240,7 @@ $(function() {
   });
 
   const AddVariant = () => {
-    socket.emit(config.createVariant, config.testCreateVariant);
+    socket.emit('CREATE_VARIANT', testCreateVariant);
   }
 
 
