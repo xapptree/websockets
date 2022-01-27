@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
 
   //Create Variant
   socket.on(config.createVariant, (request) => {
-    createVariant(request).then((item) => { socket.emit('callback_createVariant', {
+    VariantRepo.createVariant(request).then((item) => { socket.emit('callback_createVariant', {
       statusCode: 200,
       message :'Variant created success'
     });})
@@ -149,7 +149,7 @@ io.on('connection', (socket) => {
 
   //Create Device
   socket.on(config.createDevice, (request) => {
-    createDevice(request)
+    DeviceRepo.createDevice(request)
     .then((item) => { socket.emit('callback_createDevice', {
       statusCode: 200,
       message :'Device created success'
@@ -218,7 +218,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    updateVariantParent(request).then(
+    VariantRepo.updateVariantParent(request).then(
       function(value) { 
         console.log(`UpdateVariantParent status:\n${JSON.stringify(value.resource)}\n`);
         socket.emit('callback_variantUpdate', {
@@ -272,7 +272,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    updateVariant(request)
+    VariantRepo.updateVariant(request)
     .then((item) => { socket.emit('callback_variantUpdate', {
       statusCode: 200,
       message :'Update successfull'
@@ -324,7 +324,7 @@ io.on('connection', (socket) => {
     request.variant_connected = false;
     request.variant_status = 500;
 
-    updateVariant(request)
+    VariantRepo.updateVariant(request)
     .then((item) => { socket.emit('callback_variantRemove', {
       statusCode: 200,
       message :'Variant removed successfully.'
@@ -386,7 +386,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    updateDeviceName(request).then(
+    DeviceRepo.updateDeviceName(request).then(
       function(value) { 
         console.log(`UpdateDeviceName status:\n${JSON.stringify(value.resource)}\n`);
         socket.emit('callback_deviceUpdate', {
@@ -456,7 +456,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    updateDevice(request).then(
+    DeviceRepo.updateDevice(request).then(
       function(value) { 
         console.log(`UpdateDevice status:\n${JSON.stringify(value.resource)}\n`);
         socket.emit('callback_deviceUpdate', {
@@ -510,7 +510,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    updateDevice(request).then(
+    DeviceRepo.updateDevice(request).then(
       function(value) { 
         console.log(`UpdateStatusDevice status:\n${JSON.stringify(value.resource)}\n`);
         if(request.from == 'Device'){

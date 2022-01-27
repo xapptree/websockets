@@ -12,11 +12,14 @@ $(function() {
   const $usernameInput = $('.usernameInput'); // Input for username
   const $messages = $('.messages');           // Messages area
   const $inputMessage = $('.inputMessage');   // Input message input box
+  const $btnAddVariant = $('.btnAddVariant'); 
+  const $btnAddDeviceOne = $('.btnAddDeviceOne'); 
 
   const $loginPage = $('.login.page');        // The login page
   const $chatPage = $('.chat.page');          // The chatroom page
 
   const socket = io();
+  const config = require('./dbconfig');
 
   // Prompt for setting a username
   let username;
@@ -218,6 +221,16 @@ $(function() {
   $inputMessage.click(() => {
     $inputMessage.focus();
   });
+
+  //Button click
+  $btnAddVariant.click(()=>{
+    AddVariant();
+  });
+
+  const AddVariant = () => {
+    socket.emit(config.createVariant, config.testCreateVariant);
+  }
+
 
   // Socket events
 
