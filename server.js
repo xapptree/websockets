@@ -149,12 +149,17 @@ io.on('connection', (socket) => {
 
   //Create Device
   socket.on(config.createDevice, (request) => {
+    console.log('In create variant');
     DeviceRepo.createDevice(request)
-    .then((item) => { socket.emit('callback_createDevice', {
+    .then((item) => {
+      console.log(`CreateVariant status:\n${JSON.stringify(value.resource)}\n`);
+       socket.emit('callback_createDevice', {
       statusCode: 200,
       message :'Device created success'
     });})
-    .catch((error) => {  socket.emit('callback_createDevice', {
+    .catch((error) => { 
+      console.log(`CreateVariant Error:\n${JSON.stringify(error)}\n`);
+       socket.emit('callback_createDevice', {
       statusCode: 409,
       message :'Device created failed'
     });});
