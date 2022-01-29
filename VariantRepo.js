@@ -4,12 +4,15 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     createVariant:async function(mongoDB, request) {
         try{
+            var mVariant =  await checkVariant(mongoDB, request.variant_id);
+            if(mVariant != null){
+                return null;
+            }
             var response =  await mongoDB.collection(config.variantContainer.id).insertOne(request);
             return response.insertedId; 
         }
         catch(err){
-            console.log(`CreateVariant Error:\n${JSON.stringify(err)}\n`);
-            console.log(`CreateVariant Error:\n${err}\n`);
+            console.log(`CreateVariant Error:\n${err}\n`)
             throw(err);
         }
     },
@@ -89,6 +92,21 @@ module.exports = {
     getVariant :async function(mongoDB,id) {
         try{
             var cursor= mongoDB.collection(config.variantContainer.id).find({_id:ObjectId(id)});
+            const allValues = await cursor.toArray();
+            await cursor.close();
+            if(allValues.length){
+                return allValues[0];
+            }else{
+                return null;
+            }
+        }catch(err){
+            throw(err);
+        }
+    },
+
+    checkVariant :async function(mongoDB,id) {
+        try{
+            var cursor= mongoDB.collection(config.variantContainer.id).find({variant_id:id});
             const allValues = await cursor.toArray();
             await cursor.close();
             if(allValues.length){

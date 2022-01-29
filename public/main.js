@@ -33,6 +33,24 @@ $(function() {
     "firmare_name" : "SmartBoard_12Channel"
   }
 
+  var testCreateDevice= {
+    "variant_id": "ESP32_2022",
+    "device_id": "SWITCH-01",
+    "parent_id": "p2",
+    "device_type": "SWITCH",
+    "device_name": "Bed light",
+    "device_status": 500,
+    "digital_pin": "2",
+    "device_enable": true,
+    "container": "BedRoom",
+    "variant_connected": true,
+    "access_type": "PRIVATE",
+    "last_communication_type": "MANUAL",
+    "last_communication_by": "",
+    "firmware_version": "1.0.0",
+    "firmare_name": "SmartSwitch"
+  }
+
   // Prompt for setting a username
   let username;
   let connected = false;
@@ -237,6 +255,10 @@ $(function() {
   //Button click
   $btnAddVariant.click(()=>{
     AddVariant();
+  });
+
+  $btnAddDeviceOne.click(()=>{
+    socket.emit('CREATE_DEVICE', testCreateDevice);
   });
 
   const AddVariant = () => {

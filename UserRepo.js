@@ -14,17 +14,6 @@ module.exports = {
         catch(err){
             throw(err);
         }
-
-
-        // getRegisteredUser(mongoDB, request.mobile).then((item) => { 
-        //     if(item == null){
-        //         return null;
-        //     }
-            
-        // }).catch((error) => {
-        //     throw(error);
-        //  });
-
     },
       
       updateUser:async function(mongoDB,request) {

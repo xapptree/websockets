@@ -4,10 +4,15 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     createDevice:async function(mongoDB, request) {
         try{
+            var mDevice =  await checkDevice(mongoDB, request.device_id,request.variant_id);
+            if(mDevice != null){
+                return null;
+            }
             var response =  await mongoDB.collection(config.deviceContainer.id).insertOne(request);
             return response.insertedId; 
         }
         catch(err){
+            console.log(`CreateDevice Error:\n${err}\n`)
             throw(err);
         }
     },
@@ -87,6 +92,21 @@ module.exports = {
     getDevice :async function(mongoDB,id) {
         try{
             var cursor= mongoDB.collection(config.deviceContainer.id).find({_id:ObjectId(id)});
+            const allValues = await cursor.toArray();
+            await cursor.close();
+            if(allValues.length){
+                return allValues[0];
+            }else{
+                return null;
+            }
+        }catch(err){
+            throw(err);
+        }
+    },
+
+    checkDevice :async function(mongoDB,id, variantID) {
+        try{
+            var cursor= mongoDB.collection(config.deviceContainer.id).find({device_id:id, variant_id:variantID});
             const allValues = await cursor.toArray();
             await cursor.close();
             if(allValues.length){

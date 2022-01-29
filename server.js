@@ -155,7 +155,7 @@ io.on('connection', (socket) => {
   //Create Device
   socket.on(config.createDevice, (request) => {
     console.log('In create Device');
-    DeviceRepo.createDevice(request)
+    DeviceRepo.createDevice(mongoDB,request)
     .then((item) => {
       console.log(`CreateDevice status:\n${JSON.stringify(item.resource)}\n`);
        socket.emit('callback_createDevice', {
@@ -172,7 +172,7 @@ io.on('connection', (socket) => {
 
    //Create User
    socket.on(config.createUser, (request) => {
-    createUser(request)
+    createUser(mongoDB,request)
     .then((item) => {
       if(item == null){
         socket.emit('callback_createUser', {
@@ -228,7 +228,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    VariantRepo.updateVariantParent(request).then(
+    VariantRepo.updateVariantParent(mongoDB,request).then(
       function(value) { 
         console.log(`UpdateVariantParent status:\n${JSON.stringify(value.resource)}\n`);
         socket.emit('callback_variantUpdate', {
@@ -282,7 +282,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    VariantRepo.updateVariant(request)
+    VariantRepo.updateVariant(mongoDB,request)
     .then((item) => { socket.emit('callback_variantUpdate', {
       statusCode: 200,
       message :'Update successfull'
@@ -334,7 +334,7 @@ io.on('connection', (socket) => {
     request.variant_connected = false;
     request.variant_status = 500;
 
-    VariantRepo.updateVariant(request)
+    VariantRepo.updateVariant(mongoDB,request)
     .then((item) => { socket.emit('callback_variantRemove', {
       statusCode: 200,
       message :'Variant removed successfully.'
@@ -396,7 +396,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    DeviceRepo.updateDeviceName(request).then(
+    DeviceRepo.updateDeviceName(mongoDB,request).then(
       function(value) { 
         console.log(`UpdateDeviceName status:\n${JSON.stringify(value.resource)}\n`);
         socket.emit('callback_deviceUpdate', {
@@ -466,7 +466,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    DeviceRepo.updateDevice(request).then(
+    DeviceRepo.updateDevice(mongoDB,request).then(
       function(value) { 
         console.log(`UpdateDevice status:\n${JSON.stringify(value.resource)}\n`);
         socket.emit('callback_deviceUpdate', {
@@ -520,7 +520,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    DeviceRepo.updateDevice(request).then(
+    DeviceRepo.updateDevice(mongoDB,request).then(
       function(value) { 
         console.log(`UpdateStatusDevice status:\n${JSON.stringify(value.resource)}\n`);
         if(request.from == 'Device'){
