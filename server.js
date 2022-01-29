@@ -137,11 +137,16 @@ io.on('connection', (socket) => {
 
   //Create Variant
   socket.on(config.createVariant, (request) => {
-    VariantRepo.createVariant(request).then((item) => { socket.emit('callback_createVariant', {
+    console.log('In create variant');
+    VariantRepo.createVariant(request).then((item) => {
+      console.log(`CreateVariant status:\n${JSON.stringify(item.resource)}\n`);
+       socket.emit('callback_createVariant', {
       statusCode: 200,
       message :'Variant created success'
     });})
-    .catch((error) => {  socket.emit('callback_createVariant', {
+    .catch((error) => {
+      console.log(`CreateVariant Error:\n${JSON.stringify(error)}\n`);
+        socket.emit('callback_createVariant', {
       statusCode: 409,
       message :'Variant created failed'
     });});
@@ -149,16 +154,16 @@ io.on('connection', (socket) => {
 
   //Create Device
   socket.on(config.createDevice, (request) => {
-    console.log('In create variant');
+    console.log('In create Device');
     DeviceRepo.createDevice(request)
     .then((item) => {
-      console.log(`CreateVariant status:\n${JSON.stringify(value.resource)}\n`);
+      console.log(`CreateDevice status:\n${JSON.stringify(item.resource)}\n`);
        socket.emit('callback_createDevice', {
       statusCode: 200,
       message :'Device created success'
     });})
     .catch((error) => { 
-      console.log(`CreateVariant Error:\n${JSON.stringify(error)}\n`);
+      console.log(`CreateDevice Error:\n${JSON.stringify(error)}\n`);
        socket.emit('callback_createDevice', {
       statusCode: 409,
       message :'Device created failed'
