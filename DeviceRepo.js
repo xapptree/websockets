@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     createDevice:async function(mongoDB, request) {
         try{
-            var mDevice =  await checkDevice(mongoDB, request.device_id,request.variant_id);
+            var mDevice =  await this.checkDevice(mongoDB, request.device_id,request.variant_id);
             if(mDevice != null){
                 return null;
             }

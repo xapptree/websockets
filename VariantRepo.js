@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     createVariant:async function(mongoDB, request) {
         try{
-            var mVariant =  await checkVariant(mongoDB, request.variant_id);
+            var mVariant =  await this.checkVariant(mongoDB, request.variant_id);
             if(mVariant != null){
                 return null;
             }
@@ -88,7 +88,6 @@ module.exports = {
                throw(err);
             }
         },
-      
     getVariant :async function(mongoDB,id) {
         try{
             var cursor= mongoDB.collection(config.variantContainer.id).find({_id:ObjectId(id)});
@@ -103,7 +102,6 @@ module.exports = {
             throw(err);
         }
     },
-
     checkVariant :async function(mongoDB,id) {
         try{
             var cursor= mongoDB.collection(config.variantContainer.id).find({variant_id:id});
