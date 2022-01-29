@@ -14,6 +14,8 @@ $(function() {
   const $inputMessage = $('.inputMessage');   // Input message input box
   const $btnAddVariant = $('.btnAddVariant'); 
   const $btnAddDeviceOne = $('.btnAddDeviceOne'); 
+  const $btnON = $('.btnON'); 
+  const $btnOFF = $('.btnOFF'); 
 
   const $loginPage = $('.login.page');        // The login page
   const $chatPage = $('.chat.page');          // The chatroom page
@@ -49,6 +51,20 @@ $(function() {
     "last_communication_by": "",
     "firmware_version": "1.0.0",
     "firmare_name": "SmartSwitch"
+  }
+
+  var onUpdateDeviceStatus = {
+    "id":"60e95c7535c275e298301e82",
+    "device_id":"SWITCH-01",
+    "variant_id": "ESP32_2022",
+    "device_status": 200,
+  }
+
+  var offUpdateDeviceStatus = {
+    "id":"60e95c7535c275e298301e82",
+    "device_id":"SWITCH-01",
+    "variant_id": "ESP32_2022",
+    "device_status": 500,
   }
 
   // Prompt for setting a username
@@ -259,6 +275,14 @@ $(function() {
 
   $btnAddDeviceOne.click(()=>{
     socket.emit('CREATE_DEVICE', testCreateDevice);
+  });
+
+  $btnON.click(()=>{
+    socket.emit('UPDATE_DEVICE_STATUS', onUpdateDeviceStatus);
+  });
+
+  $btnOFF.click(()=>{
+    socket.emit('UPDATE_DEVICE_STATUS', offUpdateDeviceStatus);
   });
 
   const AddVariant = () => {
