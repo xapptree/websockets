@@ -8,6 +8,8 @@ module.exports = {
             return response.insertedId; 
         }
         catch(err){
+            console.log(`CreateVariant Error:\n${JSON.stringify(err)}\n`);
+            console.log(`CreateVariant Error:\n${err}\n`);
             throw(err);
         }
     },
