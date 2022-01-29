@@ -522,7 +522,7 @@ io.on('connection', (socket) => {
 
     DeviceRepo.updateDevice(mongoDB,request).then(
       function(value) { 
-        console.log(`UpdateStatusDevice status:\n${JSON.stringify(value.resource)}\n`);
+        //console.log(`UpdateStatusDevice status:\n${JSON.stringify(value.resource)}\n`);
         if(request.from == 'Device'){
           socket.broadcast.emit('callback_deviceStatusUpdate', {
             statusCode: 200,
@@ -542,7 +542,7 @@ io.on('connection', (socket) => {
         }
       },
       function(error) { 
-        console.log(`UpdateStatusDevice Error:\n${JSON.stringify(error)}\n`);
+        //console.log(`UpdateStatusDevice Error:\n${JSON.stringify(error)}\n`);
         socket.emit('callback_deviceStatusUpdate', {
           statusCode: 409,
           message : 'Failed to update Device Status.'
