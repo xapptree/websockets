@@ -58,6 +58,7 @@ $(function() {
     "device_id":"SWITCH-01",
     "variant_id": "ESP32_2022",
     "device_status": 200,
+    "from":"Web"
   }
 
   var offUpdateDeviceStatus = {
@@ -65,6 +66,7 @@ $(function() {
     "device_id":"SWITCH-01",
     "variant_id": "ESP32_2022",
     "device_status": 500,
+    "from":"Web"
   }
 
   // Prompt for setting a username
