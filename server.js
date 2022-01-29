@@ -138,7 +138,7 @@ io.on('connection', (socket) => {
   //Create Variant
   socket.on(config.createVariant, (request) => {
     console.log('In create variant');
-    VariantRepo.createVariant(request).then((item) => {
+    VariantRepo.createVariant(mongoDB,request).then((item) => {
       console.log(`CreateVariant status:\n${JSON.stringify(item.resource)}\n`);
        socket.emit('callback_createVariant', {
       statusCode: 200,
