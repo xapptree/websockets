@@ -19,7 +19,7 @@ module.exports = {
       
       updateDevice:async function(mongoDB,request) {
           try{
-            var response = await mongoDB.collection(config.deviceContainer.id).update({device_id:request.id},request,{ upsert: false });
+            var response = await mongoDB.collection(config.deviceContainer.id).update({_id:ObjectId(request.id)},request,{ upsert: false });
            if(response.result.nModified>0){
             return "Data updated successfully."
            }else{
@@ -51,7 +51,7 @@ module.exports = {
 
         updateDeviceStatus:async function(mongoDB,request) {
             try{
-              var response = await mongoDB.collection(config.deviceContainer.id).updateOne({_id:ObjectId(request.id), variant_id:request.variant_id},
+              var response = await mongoDB.collection(config.deviceContainer.id).updateOne({device_id:request.device_id, variant_id:request.variant_id},
               {
                $set: {
                    "device_status": request.device_status

@@ -520,7 +520,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    DeviceRepo.updateDevice(mongoDB,request).then(
+    DeviceRepo.updateDeviceStatus(mongoDB,request).then(
       function(value) { 
         //console.log(`UpdateStatusDevice status:\n${JSON.stringify(value.resource)}\n`);
         if(request.from == 'Device'){
