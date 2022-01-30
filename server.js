@@ -532,6 +532,7 @@ io.on('connection', (socket) => {
             variant_id:request.variant_id
           });
         }else{
+          console.log('UpdateStatus successfull');
           io.emit(`callback_deviceStatusUpdate:${request.variant_id}`, {
             statusCode: 200,
             message :'Update successfull',
@@ -542,7 +543,8 @@ io.on('connection', (socket) => {
         }
       },
       function(error) { 
-        //console.log(`UpdateStatusDevice Error:\n${JSON.stringify(error)}\n`);
+      console.log(`UpdateStatusDevice Error:\n${error}\n`);
+        console.log('UpdateStatus Error');
         socket.emit('callback_deviceStatusUpdate', {
           statusCode: 409,
           message : 'Failed to update Device Status.'
