@@ -496,10 +496,10 @@ io.on('connection', (socket) => {
       return;
     }
 
-    if(request.id == undefined){
+    if(request.device_id == undefined){
       socket.emit('callback_deviceStatusUpdate', {
         statusCode: 400,
-        message :'Bad data request, request property id missing.'
+        message :'Bad data request, request property device id missing.'
       });
       return;
     }
@@ -528,7 +528,7 @@ io.on('connection', (socket) => {
             statusCode: 200,
             message :'Update successfull',
             device_status:request.device_status,
-            device_id:request.id,
+            device_id:request.device_id,
             variant_id:request.variant_id
           });
         }else{
@@ -537,7 +537,7 @@ io.on('connection', (socket) => {
             statusCode: 200,
             message :'Update successfull',
             device_status:request.device_status,
-            device_id:request.id,
+            device_id:request.device_id,
             variant_id:request.variant_id
           });
         }

@@ -55,7 +55,7 @@ $(function() {
 
   var onUpdateDeviceStatus = {
     "id":"60e95c7535c275e298301e82",
-    "device_id":"SWITCH-01",
+    "device_id":"relay1",
     "variant_id": "ESP32_2022",
     "device_status": 200,
     "from":"Web"
@@ -63,7 +63,7 @@ $(function() {
 
   var offUpdateDeviceStatus = {
     "id":"60e95c7535c275e298301e82",
-    "device_id":"SWITCH-01",
+    "device_id":"relay1",
     "variant_id": "ESP32_2022",
     "device_status": 500,
     "from":"Web"
