@@ -487,7 +487,8 @@ io.on('connection', (socket) => {
 
   //update device Status
   socket.on(config.updateDeviceStatus, (request) => {
-
+    console.log("Triggered event\n");
+    console.log(`Triggered data:\n${JSON.stringify(request)}\n`);
     if(request ==null && request == undefined){
       socket.emit('callback_deviceStatusUpdate', {
         statusCode: 400,
