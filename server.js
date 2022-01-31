@@ -690,52 +690,56 @@ io.on('connection', (socket) => {
     });
   });
 
-  // when the user disconnects.. perform this
-  socket.on('disconnect', () => {
-    //mongoDB.close();
-    if (addedUser) {
-      --numUsers;
-      VariantRepo.updateVariantConnection(mongoDB, config.testUpdateVariantDisconnected).then(
-        function(value) { 
-          console.log(value);
-          socket.emit('new message', {
-            username:socket.username,
-            statusCode: 200,
-            message :'Update successfull'
-          });
-        },
-    function(error) { 
-      console.log(error);
-      socket.emit('new message', {
-        username:socket.username,
-        statusCode: 409,
-        message : 'Failed to update Variant.'
-      });
-    }); 
+  socket.on("disconnect", (reason) => {
+    console.log(reason); // "ping timeout"
+  });
 
-    //Update all devices
-    DeviceRepo.updateAllDeviceStatus(mongoDB, config.testUpdateAllDeviceStatus).then(
-      function(value) { 
-        console.log(value);
-        socket.emit('new message', {
-          username:socket.username,
-          statusCode: 200,
-          message :'Update successfull'
-        });
-      },
-  function(error) { 
-    console.log(error);
-    socket.emit('new message', {
-      username:socket.username,
-      statusCode: 409,
-      message : 'Failed to update Variant.'
-    });
-  });
-      // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        numUsers: numUsers
-      });
-    }
-  });
+  // when the user disconnects.. perform this
+  // socket.on('disconnect', () => {
+  //   //mongoDB.close();
+  //   if (addedUser) {
+  //     --numUsers;
+  //     VariantRepo.updateVariantConnection(mongoDB, config.testUpdateVariantDisconnected).then(
+  //       function(value) { 
+  //         console.log(value);
+  //         socket.emit('new message', {
+  //           username:socket.username,
+  //           statusCode: 200,
+  //           message :'Update successfull'
+  //         });
+  //       },
+  //   function(error) { 
+  //     console.log(error);
+  //     socket.emit('new message', {
+  //       username:socket.username,
+  //       statusCode: 409,
+  //       message : 'Failed to update Variant.'
+  //     });
+  //   }); 
+
+  //   //Update all devices
+  //   DeviceRepo.updateAllDeviceStatus(mongoDB, config.testUpdateAllDeviceStatus).then(
+  //     function(value) { 
+  //       console.log(value);
+  //       socket.emit('new message', {
+  //         username:socket.username,
+  //         statusCode: 200,
+  //         message :'Update successfull'
+  //       });
+  //     },
+  // function(error) { 
+  //   console.log(error);
+  //   socket.emit('new message', {
+  //     username:socket.username,
+  //     statusCode: 409,
+  //     message : 'Failed to update Variant.'
+  //   });
+  // });
+  //     // echo globally that this client has left
+  //     socket.broadcast.emit('user left', {
+  //       username: socket.username,
+  //       numUsers: numUsers
+  //     });
+  //   }
+  // });
 });
