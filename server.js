@@ -3,7 +3,12 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bcrypt = require('bcrypt');
-const server = require('http').createServer(app);
+var socketOption = {
+  pingInterval:60000,
+  pingTimeout : 90000,
+  connectTimeout:50000
+};
+const server = require('http').createServer(socketOption,app);
 var io = require('socket.io')(server);
 const { body, validationResult, check } = require('express-validator');
 var port = process.env.port || process.env.PORT || 1337
